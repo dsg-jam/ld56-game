@@ -4391,10 +4391,10 @@ spot_range = 2.17951
 spot_angle = 40.2996
 
 [node name="firefly" parent="." instance=ExtResource("19_8nqsr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.891176, 0.762384, -0.452255)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.843573, 0.762384, -0.629598)
 
 [node name="spider" parent="." instance=ExtResource("19_m5xpo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.846275, 0.862307, -0.649172)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433425, 0.142903, -0.874502)
 
 [node name="spiderweb" parent="." instance=ExtResource("21_jips6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.3839, 0, 3.36264)

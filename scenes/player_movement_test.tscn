@@ -1,10 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://b570nnkcavtyv"]
+[gd_scene load_steps=3 format=3 uid="uid://b570nnkcavtyv"]
 
 [ext_resource type="PackedScene" uid="uid://bxhfa4fltovbh" path="res://prefabs/player.tscn" id="1_n46cj"]
+[ext_resource type="PackedScene" uid="uid://d0a8bslojb72b" path="res://prefabs/firefly.tscn" id="2_7cj3n"]
 
 [node name="PlayerMovementTest" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2, 0)
 
 [node name="Player" parent="." instance=ExtResource("1_n46cj")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.28648, 0)
+
+[node name="firefly" parent="." instance=ExtResource("2_7cj3n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0142054, 0.376791)
