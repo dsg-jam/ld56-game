@@ -1,5 +1,8 @@
 extends Node3D
 
+@export var speed: float = 0.2
+@export var height: float = 1.0
+
 @onready var player_path = $PlayerPath
 @onready var player_follow = $PlayerPath/PlayerPathFollow
 @onready var player = $PlayerPath/PlayerPathFollow/Player
@@ -12,18 +15,18 @@ var in_free_move: bool = true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player_follow.loop = false
+	player_path.curve = temp_curve
 
 func _physics_process(delta):
-	player_follow.progress += delta * 0.2
+	player_follow.progress += delta * speed
 	if Input.is_action_just_released("click"):
 		path_draw_ongoing = false
-		if temp_curve.point_count <= 0:
+		if temp_curve.point_count <= 2:
 			return
 		var last_point = temp_curve.get_point_position(temp_curve.get_point_count() - 1)
 		var second_last_point = temp_curve.get_point_position(temp_curve.get_point_count() - 2)
 		var direction = (last_point - second_last_point).normalized()
 		temp_curve.add_point(last_point + direction * 100)
-		player_path.curve = temp_curve
 	
 	if path_draw_ongoing:
 		mouse_path()
@@ -32,7 +35,7 @@ func _physics_process(delta):
 func mouse_path():
 	var pos = get_viewport().get_mouse_position()
 	var cam = get_tree().root.get_camera_3d()
-	pos = cam.project_position(pos, 1.0)
+	pos = cam.project_position(pos, cam.global_position.y - height)
 	latest_point = pos
 	var last_point: Vector3 = player.global_position
 	if temp_curve.point_count > 0:
