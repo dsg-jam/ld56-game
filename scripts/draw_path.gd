@@ -2,7 +2,6 @@ extends Node3D
 
 @onready var player_path = $PlayerPath
 @onready var player_follow = $PlayerPath/PlayerPathFollow
-@onready var player_camera = $PlayerCamera
 @onready var player = $PlayerPath/PlayerPathFollow/Player
 
 var path_draw_ongoing: bool = false
@@ -32,12 +31,14 @@ func _physics_process(delta):
 
 func mouse_path():
 	var pos = get_viewport().get_mouse_position()
-	pos = player_camera.project_position(pos, 1.0)
+	var cam = get_tree().root.get_camera_3d()
+	pos = cam.project_position(pos, 1.0)
 	latest_point = pos
 	var last_point: Vector3 = player.global_position
 	if temp_curve.point_count > 0:
 		last_point = temp_curve.get_point_position(temp_curve.point_count-1)
-	if last_point.distance_to(latest_point) > 0.05:
+	
+	if last_point.distance_to(latest_point) > 0.025:
 		temp_curve.add_point(pos)
 
 

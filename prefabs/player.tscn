@@ -13,9 +13,6 @@ radius = 0.1
 [node name="PlayerController" type="Node3D"]
 script = ExtResource("1_s6kjp")
 
-[node name="PlayerCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 0)
-
 [node name="PlayerPath" type="Path3D" parent="."]
 curve = SubResource("Curve3D_kfjlp")
 
@@ -31,5 +28,18 @@ skeleton = NodePath("../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerPath/PlayerPathFollow/Player/Area3D"]
 shape = SubResource("SphereShape3D_74w4j")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
+polygon = PackedVector2Array(0, 0, 0, 0.01, 0.01, 0.01, 0.01, 0)
+mode = 2
+path_node = NodePath("../PlayerPath")
+path_interval_type = 0
+path_interval = 0.03
+path_simplify_angle = 0.0
+path_rotation = 1
+path_local = false
+path_continuous_u = false
+path_u_distance = 1.0
+path_joined = false
 
 [connection signal="input_event" from="PlayerPath/PlayerPathFollow/Player/Area3D" to="." method="_on_area_3d_input_event"]
