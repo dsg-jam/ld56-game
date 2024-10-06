@@ -15,6 +15,8 @@ var _handled_line_idx: int = 0
 var _path_lines: Array = []
 
 func _ready() -> void:
+	self._offset.x = global_position.x
+	self._offset.z = global_position.z
 	self._player_follow.loop = false
 
 func _physics_process(delta):
