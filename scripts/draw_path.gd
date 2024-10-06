@@ -1,4 +1,4 @@
-extends Node3D
+class_name Firefly extends Node3D
 
 @export var speed: float = 0.2
 @export var height: float = 0.0
@@ -14,12 +14,30 @@ var _offset: Vector3 = Vector3.ZERO
 var _handled_line_idx: int = 0
 var _path_lines: Array = []
 
+var approaching = false
+var waiting = false
+var approach_pos = Vector3.ZERO
+
 func _ready() -> void:
 	self._offset.x = global_position.x
 	self._offset.z = global_position.z
 	self._player_follow.loop = false
 
 func _physics_process(delta):
+	if approaching:
+		if self._player_follow.global_position.distance_to(approach_pos) <= 0.01:
+			approaching = false
+			waiting = true
+			return
+		var d = self._player_follow.global_position.direction_to(approach_pos).normalized()
+		self._player_follow.set_global_position(self._player_follow.global_position + delta * d * speed)
+		return
+	
+	if waiting:
+		if self._path_draw_ongoing:
+			waiting = false
+		return
+	
 	self._clean_up_path()
 	
 	if self._player_follow.progress_ratio >= 1.0:
@@ -96,3 +114,15 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 			l.queue_free()
 		self._path_lines = []
 		self._handled_line_idx = 0
+
+func initiate_approach(pos: Vector3):
+	self._path_draw_ongoing = false
+	self._player_path.curve.clear_points()
+	self._player_follow.progress_ratio = 0
+	self._player_follow.progress = 0
+	for l in self._path_lines:
+		l.queue_free()
+	self._path_lines = []
+	self._handled_line_idx = 0
+	approaching = true
+	approach_pos = pos
