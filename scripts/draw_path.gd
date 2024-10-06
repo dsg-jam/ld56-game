@@ -60,7 +60,7 @@ func _mouse_path():
 	var cam = get_tree().root.get_camera_3d()
 	var depth = cam.global_position.y - height
 	var next_pos: Vector3 = get_tree().root.get_camera_3d().project_position(mouse_pos, depth)
-	
+	next_pos.y = global_position.y
 	next_pos -= self._offset
 	
 	var prev_pos = Vector3.INF
